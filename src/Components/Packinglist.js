@@ -26,15 +26,16 @@ export default function Packinglist({
   return (
     <div className="list">
       <ul>
-        {sortedItems.map((item) => (
-          <Item
-            item={item}
-            onDeleteItem={onDeleteItem}
-            key={item.id}
-            onToggleItem={onToggleItem}
-            onClearItems={onClearItems}
-          />
-        ))}
+        {sortedItems &&
+          sortedItems.map((item) => (
+            <Item
+              item={item}
+              onDeleteItem={onDeleteItem}
+              key={item.id}
+              onToggleItem={onToggleItem}
+              onClearItems={onClearItems}
+            />
+          ))}
       </ul>
 
       <div className="actions">
