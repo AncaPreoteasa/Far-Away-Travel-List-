@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Form from "../Components/Form";
 import Logo from "./Logo";
 import Packinglist from "./Packinglist";
+import Item from "./Item";
 import "@testing-library/jest-dom";
 
 test("renders Logo with specific text", () => {
@@ -95,4 +96,28 @@ test("clicking on the ADD button triggers the onAddItems function ", () => {
     packed: false,
     id: expect.any(Number),
   });
+});
+
+test("clicking on the delete button triggers the onDeleteItem function", () => {
+  const item = {
+    id: 1,
+    description: "Passports",
+    quantity: 2,
+    packed: false,
+  };
+  const onDeleteItemMock = jest.fn();
+  const onToggleItemMock = jest.fn();
+
+  render(
+    <Item
+      item={item}
+      onDeleteItem={onDeleteItemMock}
+      onToggleItem={onToggleItemMock}
+    />
+  );
+
+  const deleteButton = screen.getByText("❌");
+  fireEvent.click(deleteButton);
+
+  expect(onDeleteItemMock).toHaveBeenCalledWith(item.id);
 });
