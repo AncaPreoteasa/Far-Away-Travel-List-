@@ -79,3 +79,20 @@ test("selecting a sorting option changes the sorting order", () => {
     "12 Socks❌",
   ]);
 });
+
+test("clicking on the ADD button triggers the onAddItems function ", () => {
+  const onAddItemsMock = jest.fn();
+  render(<Form onAddItems={onAddItemsMock} />);
+
+  const descriptionInput = screen.getByPlaceholderText("Item..");
+  const quantityInput = screen.getByRole("combobox");
+  fireEvent.change(descriptionInput, { target: { value: "Passports" } });
+  fireEvent.change(quantityInput, { target: { value: "2" } });
+  fireEvent.click(screen.getByText("ADD"));
+  expect(onAddItemsMock).toHaveBeenCalledWith({
+    description: "Passports",
+    quantity: 2,
+    packed: false,
+    id: expect.any(Number),
+  });
+});
